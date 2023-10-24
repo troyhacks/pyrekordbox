@@ -106,7 +106,7 @@ class AnlzFile(abc.Mapping):
 
             if tag_type == 'PSSI':
                 secretcode = bytearray.fromhex("CB E1 EE FA E5 EE AD EE E9 D2 E9 EB E1 E9 F3 E8 E9 F4 E1")
-                len_entries = Int16ub.parse(bytearray(tag_data[16:17]))
+                len_entries = Int16ub.parse(tag_data[16:])
                 print(len_entries)
                 scrambled = bytearray(tagdata[18:])
                 for i in range(len(scrambled)):
