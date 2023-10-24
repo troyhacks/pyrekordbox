@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Union
 from .tags import TAGS
 from . import structs
+from construct import Int16ub
 
 logger = logging.getLogger(__name__)
 
