@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Union
 from .tags import TAGS
 from . import structs
-from construct import Int16ub
+from construct import Int16ub,Int32ub
 
 logger = logging.getLogger(__name__)
 
@@ -105,9 +105,10 @@ class AnlzFile(abc.Mapping):
             tag_type = tag_data[:4].decode("ascii")
 
             if tag_type == 'PSSI':
-                tag_data = bytearray(data[i:])
-                secretcode = bytearray.fromhex("CB E1 EE FA E5 EE AD EE E9 D2 E9 EB E1 E9 F3 E8 E9 F4 E1")
                 len_entries = Int16ub.parse(tag_data[16:])
+                len_entries_bytes = Int32ub.parse(tag_data[12:])
+                tag_data = bytearray(data[i:i+32+(len_entries*len_entries_bytes)])
+                secretcode = bytearray.fromhex("CB E1 EE FA E5 EE AD EE E9 D2 E9 EB E1 E9 F3 E8 E9 F4 E1")
                 for i in range(len(tag_data[18:])):
                     decrypt = secretcode[i%len(secretcode)]+len_entries
                     if decrypt > 255 :
