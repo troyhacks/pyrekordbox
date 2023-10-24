@@ -104,19 +104,21 @@ class AnlzFile(abc.Mapping):
             # Get the four byte struct type
             tag_type = tag_data[:4].decode("ascii")
 
-            # if tag_type == 'PSSI':
-            #     len_entries = Int16ub.parse(tag_data[16:])
-            #     len_entries_bytes = Int32ub.parse(tag_data[12:])
-            #     print(len_entries_bytes)
-            #     tag_data = bytearray(data[i:i+32+(len_entries*len_entries_bytes)-1])
-            #     secretcode = bytearray.fromhex("CB E1 EE FA E5 EE AD EE E9 D2 E9 EB E1 E9 F3 E8 E9 F4 E1")
-            #     for i in range(len(tag_data[18:])):
-            #         decrypt = secretcode[i%len(secretcode)]+len_entries
-            #         if decrypt > 255 :
-            #             decrypt -= 256
-            #         tag_data[i+18] = tag_data[i+18] ^ decrypt
-            #     print(tag_data)
-            #     tag_data = bytes(tag_data)
+            if tag_type == 'PSSI':
+                len_entries = Int16ub.parse(tag_data[16:])
+                len_entries_bytes = Int32ub.parse(tag_data[12:])
+                print(len_entries, len_entries_bytes)
+                eod = i+32+(len_entries*len_entries_bytes)-1]
+                print (i,eod)
+                tag_data = bytearray(data[i:eod)
+                secretcode = bytearray.fromhex("CB E1 EE FA E5 EE AD EE E9 D2 E9 EB E1 E9 F3 E8 E9 F4 E1")
+                for i in range(len(tag_data[18:])):
+                    decrypt = secretcode[i%len(secretcode)]+len_entries
+                    if decrypt > 255 :
+                        decrypt -= 256
+                    tag_data[i+18] = tag_data[i+18] ^ decrypt
+                print(tag_data)
+                tag_data = bytes(tag_data)
 
             try:
                 # Parse the struct
