@@ -112,7 +112,7 @@ class AnlzFile(abc.Mapping):
                     decrypt = secretcode[i%len(secretcode)]+len_entries
                     if decrypt > 255 :
                         decrypt -= 256
-                    tag_data[i+18] = scrambled[i] ^ decrypt
+                    tag_data[i+18] = tag_data[i+18] ^ decrypt
                 print(tag_data)
                 tag_data = bytes(tag_data)
 
