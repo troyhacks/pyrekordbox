@@ -114,6 +114,7 @@ class AnlzFile(abc.Mapping):
                     if decrypt > 255 :
                         decrypt -= 256
                     tag_data[i+18] = scrambled[i] ^ decrypt
+                tag_data = bytes(tag_data)
 
             try:
                 # Parse the struct
