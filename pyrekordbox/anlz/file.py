@@ -108,7 +108,7 @@ class AnlzFile(abc.Mapping):
                 len_entries = Int16ub.parse(tag_data[16:])
                 len_entries_bytes = Int32ub.parse(tag_data[12:])
                 print(len_entries, len_entries_bytes)
-                eod = i+32+(len_entries*len_entries_bytes)-1]
+                eod = i+32+(len_entries*len_entries_bytes)-1
                 print (i,eod)
                 tag_data = bytearray(data[i:eod)
                 secretcode = bytearray.fromhex("CB E1 EE FA E5 EE AD EE E9 D2 E9 EB E1 E9 F3 E8 E9 F4 E1")
